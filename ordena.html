@@ -1,0 +1,69 @@
+<html>
+	<head>
+		<script type="text/javascript">
+		function ordena(){
+			var text_field = document.getElementById('text');
+			var array_field = document.getElementById('arreglo');
+			var cadena_field = document.getElementById('cadena');
+			var ordenado_field = document.getElementById('orden');
+			
+			var text = text_field.value;
+
+			var text_a = Array.from(text.toLowerCase()).sort();
+
+			var occurrence = [];
+			var last_letter = '';
+			
+			for(i in text_a){
+				if(text_a[i] != last_letter){
+					last_letter = text_a[i];
+					occurrence.push([last_letter,1]);
+				}else{
+					occurrence[occurrence.length-1] = [last_letter,++occurrence[occurrence.length-1][1]];
+				}
+			}
+
+			var ordenado = occurrence;
+			for(o in ordenado){
+				for(p in ordenado){
+					if(ordenado[o][1] > ordenado[p][1]){
+						var aux = ordenado[o];
+						ordenado[o] = ordenado[p];
+						ordenado[p] = aux;
+					}
+				}
+			}
+			for(o in ordenado){
+				for(p in ordenado){
+					if(ordenado[o][0] < ordenado[p][0] && ordenado[o][1] == ordenado[p][1]){
+						var aux = ordenado[o];
+						ordenado[o] = ordenado[p];
+						ordenado[p] = aux;
+					}
+				}
+			}
+
+			var last_res = [];
+			for(u in ordenado){
+				last_res.push(ordenado[u][0]);
+			}
+
+			last_res = last_res.toString().replace(/,/g,'');
+
+			array_field.value = text_a;
+			ordenado_field.value = ordenado;
+			cadena_field.value = last_res;
+
+			//alert(JSON.stringify(ordenado));			
+			//alert(text);
+		}
+		</script>
+	</head>
+	<body>
+		<input type="text" id="text" />
+		<input type="button" onclick="ordena()" value="Ordenar" />
+		<input type="text" id="arreglo" />
+		<input type="text" id="orden" />
+		<input type="text" id="cadena" />
+	</body>
+</html>
